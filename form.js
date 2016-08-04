@@ -28,9 +28,8 @@ const App = React.createClass({
     const text = this.state.isPreview ? '编辑' : '预览';
     return <div>
       <button onClick={this.toggle}>{text}</button>
-      <Editor className={this.state.isPreview ? "hidden" : ""} onAdd={this.addElement} onRemove={this.removeElement}
-              elements={this.state.elements}/>
-      <Preview className={this.state.isPreview ? "" : "hidden"}/>
+      <Editor className={this.state.isPreview ? "hidden" : ""} onAdd={this.addElement} onRemove={this.removeElement} elements={this.state.elements}/>
+      <Preview className={this.state.isPreview ? "" : "hidden"} elements={this.state.elements}/>
     </div>
   }
 });
@@ -65,7 +64,15 @@ const Editor = React.createClass({
 
 const Preview = React.createClass({
   render: function () {
-    return <div className={this.props.className}>Preview</div>;
+    const elements = this.props.elements.map((ele, index) => {
+      return <div key={index}>
+        <input type={ele}/>
+      </div>;
+    });
+    return <div className={this.props.className}>
+      {elements}
+      <button>Submit</button>
+    </div>;
   }
 });
 
